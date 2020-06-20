@@ -28,10 +28,10 @@ namespace ClipboardFIFO
         /// <value><c>true</c> if always on top; otherwise, <c>false</c>.</value>
         public bool AlwaysOnTop { get; set; } = true;
 
-        /// <summary>
+        /*/// <summary>
         /// Gets or sets a value indicating whether this <see cref="T:MultilingualWordCounter.SettingsData"/> hides the close button.
         /// </summary>
         /// <value><c>true</c> if hide close button; otherwise, <c>false</c>.</value>
-        public bool HideCloseButton { get; set; } = false;
+        public bool HideCloseButton { get; set; } = false;*/
     }
 }

@@ -147,6 +147,7 @@ namespace ClipboardFIFO
         	this.minimizeToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("minimizeToolStripMenuItem.Image")));
         	this.minimizeToolStripMenuItem.Name = "minimizeToolStripMenuItem";
         	this.minimizeToolStripMenuItem.Size = new System.Drawing.Size(28, 20);
+        	this.minimizeToolStripMenuItem.Visible = false;
         	this.minimizeToolStripMenuItem.Click += new System.EventHandler(this.OnMinimizeToolStripMenuItemClick);
         	// 
         	// fifoListBox
@@ -276,6 +277,7 @@ namespace ClipboardFIFO
         	this.hideCloseButtonToolStripMenuItem.Name = "hideCloseButtonToolStripMenuItem";
         	this.hideCloseButtonToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
         	this.hideCloseButtonToolStripMenuItem.Text = "&Hide close button";
+        	this.hideCloseButtonToolStripMenuItem.Visible = false;
         	this.hideCloseButtonToolStripMenuItem.Click += new System.EventHandler(this.OnHideCloseButtonToolStripMenuItemClick);
         	// 
         	// toolStripSeparator5

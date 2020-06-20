@@ -92,12 +92,12 @@ namespace ClipboardFIFO
                 this.alwaysOnTopToolStripMenuItem.PerformClick();
             }
 
-            // Hide close button
+            /*// Hide close button
             if (this.settingsData.HideCloseButton)
             {
                 // Click it
                 this.hideCloseButtonToolStripMenuItem.PerformClick();
-            }
+            }*/
         }
 
         /// <summary>
@@ -306,7 +306,8 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnClearButtonClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Clear FIFO list box
+            this.fifoListBox.Items.Clear();
         }
 
         /// <summary>
