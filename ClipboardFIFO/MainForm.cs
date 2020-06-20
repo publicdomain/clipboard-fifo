@@ -10,6 +10,7 @@ namespace ClipboardFIFO
     using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using System.Xml.Serialization;
@@ -57,8 +58,46 @@ namespace ClipboardFIFO
             // The InitializeComponent() call is required for Windows Forms designer support.
             this.InitializeComponent();
 
+            /* Set icons */
+
+            // Set associated icon from exe file
+            this.associatedIcon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
+
+            // Set daily releases icon
+            this.dailyReleasesPublicDomainDailycomToolStripMenuItem.Image = this.associatedIcon.ToBitmap();
+
+            /* Process settings */
+
+            // Check for settings data file
+            if (!File.Exists("SettingsData.txt"))
+            {
+                // Not present, assume first run and create it
+                this.SaveSettingsData();
+            }
+
+            // Populate settings data
+            this.settingsData = this.LoadSettingsData();
+
+            /* Clipboard */
+
             // Add clipboard listener
             AddClipboardFormatListener(this.Handle);
+
+            /* Initial option processing */
+
+            // Always on top
+            if (this.settingsData.AlwaysOnTop)
+            {
+                // Click it
+                this.alwaysOnTopToolStripMenuItem.PerformClick();
+            }
+
+            // Hide close button
+            if (this.settingsData.HideCloseButton)
+            {
+                // Click it
+                this.hideCloseButtonToolStripMenuItem.PerformClick();
+            }
         }
 
         /// <summary>
