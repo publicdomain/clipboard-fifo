@@ -296,7 +296,22 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnDeleteSelectedButtonClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Prevent drawing
+            this.fifoListBox.BeginUpdate();
+
+            // Iterate in reverse
+            for (int i = this.fifoListBox.Items.Count - 1; i >= 0; i--)
+            {
+                // Check if selected
+                if (this.fifoListBox.GetSelected(i))
+                {
+                    // Remove
+                    this.fifoListBox.Items.RemoveAt(i);
+                }
+            }
+
+            // Resume drawing
+            this.fifoListBox.EndUpdate();
         }
 
         /// <summary>
