@@ -60,6 +60,76 @@ namespace ClipboardFIFO
         }
 
         /// <summary>
+        /// The Window procedure.
+        /// </summary>
+        /// <param name="m">The message.</param>
+        protected override void WndProc(ref Message m)
+        {
+            // Test incoming message
+            switch (m.Msg)
+            {
+                // Check for clipboard update
+                case WmClipboardUpdate:
+
+                    // Check for copied text
+                    if (Clipboard.ContainsText())
+                    {
+                        // Add to list
+                        this.fifoListBox.Items.Add(Clipboard.GetText());
+
+                        // Rise count
+                        this.copyCount++;
+
+                        // Update status
+                        this.countToolStripStatusLabel.Text = this.copyCount.ToString();
+                    }
+
+                    // Halt flow
+                    break;
+
+                // CTRL+V && (int)m.WParam == 1 --not compared since it's only one ID
+                case WMHOTKEY:
+
+                    // Check for list items
+                    if (this.fifoListBox.Items.Count > 0)
+                    {
+                        // Unregister hotkey
+                        UnregisterHotKey(this.Handle, 1);
+
+                        // Remove cipboard listener
+                        RemoveClipboardFormatListener(this.Handle);
+
+                        // Set clipboard to next item in FIFO order
+                        Clipboard.SetText(this.fifoListBox.Items[0].ToString());
+
+                        // Send ^V
+                        SendKeys.SendWait("^v");
+
+                        // Remove last item
+                        this.fifoListBox.Items.RemoveAt(0);
+
+                        // Add clipboard listener
+                        AddClipboardFormatListener(this.Handle);
+
+                        // Register hotkey again
+                        RegisterHotKey(this.Handle, 1, MODCONTROL, (int)Keys.V);
+                    }
+
+                    // Halt flow
+                    break;
+
+                // Continue processing
+                default:
+
+                    // Pass message
+                    base.WndProc(ref m);
+
+                    // Halt flow
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Adds the clipboard format listener.
         /// </summary>
         /// <returns><c>true</c>, if clipboard format listener was added, <c>false</c> otherwise.</returns>
@@ -224,8 +294,8 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnMainFormLoad(object sender, EventArgs e)
         {
-            // Register hotkeys
-            RegisterHotKey(this.Handle, 1, MODCONTROL, (int)Keys.V); // CTRL+V
+            // Register hotkey
+            RegisterHotKey(this.Handle, 1, MODCONTROL, (int)Keys.V);
         }
 
         /// <summary>
@@ -235,7 +305,7 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            // Unregister hotkeys
+            // Unregister hotkey
             UnregisterHotKey(this.Handle, 1);
         }
     }
