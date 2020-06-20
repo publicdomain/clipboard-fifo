@@ -215,7 +215,8 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnMainFormLoad(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Register hotkeys
+            RegisterHotKey(this.Handle, 1, MODCONTROL, (int)Keys.V); // CTRL+V
         }
 
         /// <summary>
