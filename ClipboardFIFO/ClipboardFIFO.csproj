@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Resources\arrows_559297_640_vertical_QPt_icon.ico" />
     <None Include="Resources\publicdomain.com_7-8-vista-xp.ico" />
   </ItemGroup>
   <ItemGroup>

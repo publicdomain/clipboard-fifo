@@ -333,8 +333,15 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            // Unregister hotkey
-            UnregisterHotKey(this.Handle, 1);
+            // Check if active
+            if (this.pauseResumeButton.Text.StartsWith("&P", StringComparison.InvariantCulture))
+            {
+                // Remove clipboard listener
+                RemoveClipboardFormatListener(this.Handle);
+
+                // Unregister hotkey
+                UnregisterHotKey(this.Handle, 1);
+            }
         }
     }
 }
