@@ -1,0 +1,65 @@
+[33mcommit 471d36d1cbb5dd1d4b8783486b047a26761b0901[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 10:16:58 2020 -0400
+
+    Update MainForm constructor
+
+[33mcommit 2fa7173cc85acde91924f70e245a05ac988369af[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 07:28:36 2020 -0400
+
+    Add  LoadSettingsData() function
+
+[33mcommit faf6e9b93b63e6afd33c1e0792032f479acf5061[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 07:14:08 2020 -0400
+
+    Add SaveSettingsData() function
+
+[33mcommit 59d1e86d4f369896da8fc4e57b97a231cb11df06[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 07:08:39 2020 -0400
+
+    Add program icon
+
+[33mcommit 5e30c92a37493699e219898e978df246b99a7fa0[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 06:49:36 2020 -0400
+
+    Add OnPauseResumeButtonClick() code
+
+[33mcommit fbd94ee72598c16ebff8f7e786107e3db7beeeda[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 06:49:03 2020 -0400
+
+    Add WndProc function
+
+[33mcommit bb58e8baae7fcea79a923b546bcded682426b902[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 06:19:52 2020 -0400
+
+    Add OnMainFormFormClosing() code
+
+[33mcommit c3a653de9986648e969561d22939b9e3572f4add[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 06:17:09 2020 -0400
+
+    Add OnMainFormLoad() code
+
+[33mcommit 011ac1a4efbf2babf28e8c572c195dfdf2666141[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 06:14:17 2020 -0400
+
+    Add single instance by Mutex
+
+[33mcommit 788e279201a5e12d6dd2379d8aaa9086b2e4efe0[m
+Author: Victor L. Senior <publicdomainvic@gmail.com>
+Date:   Sat Jun 20 06:10:45 2020 -0400
+
+    Add initial project files
+
+[33mcommit 440de83f0ec1b5d8aeb3ca2d77b26e56a7432112[m[33m ([m[1;33mtag: ALPHA[m[33m)[m
+Author: Victor <54631779+publicdomain@users.noreply.github.com>
+Date:   Wed Jun 17 07:32:30 2020 -0400
+
+    Initial commit

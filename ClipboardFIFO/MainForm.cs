@@ -330,13 +330,20 @@ namespace ClipboardFIFO
         }
 
         /// <summary>
-        /// Handles the always on top tool strip menu item click.
+        /// Handles the always on top tool strip menu item click event.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         private void OnAlwaysOnTopToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Toggle check state
+            this.alwaysOnTopToolStripMenuItem.Checked = !this.alwaysOnTopToolStripMenuItem.Checked;
+
+            // Set topmost state
+            this.TopMost = this.alwaysOnTopToolStripMenuItem.Checked;
+
+            // Save setting
+            this.settingsData.AlwaysOnTop = this.alwaysOnTopToolStripMenuItem.Checked;
         }
 
         /// <summary>

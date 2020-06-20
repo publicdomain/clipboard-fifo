@@ -345,7 +345,6 @@ namespace ClipboardFIFO
         	this.Name = "MainForm";
         	this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         	this.Text = "ClipboardFIFO";
-        	this.TopMost = true;
         	this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnMainFormFormClosing);
         	this.Load += new System.EventHandler(this.OnMainFormLoad);
         	this.mainTableLayoutPanel.ResumeLayout(false);
