@@ -9,8 +9,10 @@ namespace ClipboardFIFO
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.IO;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// Description of MainForm.
@@ -202,6 +204,22 @@ namespace ClipboardFIFO
 
                 // Set button text
                 this.pauseResumeButton.Text = "&Pause";
+            }
+        }
+
+        /// <summary>
+        /// Saves the settings data.
+        /// </summary>
+        private void SaveSettingsData()
+        {
+            // Use stream writer
+            using (StreamWriter streamWriter = new StreamWriter("SettingsData.txt", false))
+            {
+                // Set xml serialzer
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(SettingsData));
+
+                // Serialize settings data
+                xmlSerializer.Serialize(streamWriter, this.settingsData);
             }
         }
 
