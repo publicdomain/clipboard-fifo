@@ -89,6 +89,15 @@ namespace ClipboardFIFO
         private static extern bool RegisterHotKey(IntPtr handle, int id, int modifiers, int vk);
 
         /// <summary>
+        /// Unregisters the hot key.
+        /// </summary>
+        /// <returns><c>true</c>, if the hot key was unregistered, <c>false</c> otherwise.</returns>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="id">The identifier.</param>
+        [DllImport("user32.dll")]
+        private static extern bool UnregisterHotKey(IntPtr handle, int id);
+
+        /// <summary>
         /// Handles the pause resume button click.
         /// </summary>
         /// <param name="sender">Sender object.</param>
@@ -226,7 +235,8 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            // TODO Add code
+            // Unregister hotkeys
+            UnregisterHotKey(this.Handle, 1);
         }
     }
 }
