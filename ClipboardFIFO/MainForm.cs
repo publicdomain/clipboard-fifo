@@ -416,13 +416,14 @@ namespace ClipboardFIFO
         }
 
         /// <summary>
-        /// Handles the source code GitHub.com tool strip menu item click.
+        /// Handles the source code GitHub.com tool strip menu item click event.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         private void OnSourceCodeGithubcomToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Open GitHub
+            Process.Start("https://github.com/publicdomain");
         }
 
         /// <summary>
