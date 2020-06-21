@@ -15,6 +15,7 @@ namespace ClipboardFIFO
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using System.Xml.Serialization;
+    using PublicDomain;
 
     /// <summary>
     /// Description of MainForm.
@@ -62,7 +63,7 @@ namespace ClipboardFIFO
             /* Set icons */
 
             // Set associated icon from exe file
-            this.associatedIcon = Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
+            this.associatedIcon = Icon.ExtractAssociatedIcon(typeof(MainForm).GetTypeInfo().Assembly.Location);
 
             // Set daily releases icon
             this.dailyReleasesPublicDomainDailycomToolStripMenuItem.Image = this.associatedIcon.ToBitmap();
@@ -113,29 +114,25 @@ namespace ClipboardFIFO
                 // Check for clipboard update
                 case WmClipboardUpdate:
 
-                    // Check for copied text
-                    if (Clipboard.ContainsText())
+                    // TODO Supress exception [Can be improved]
+                    try
                     {
-                        // TODO Supress exception [Can be improved]
-                        try
+                        // TODO Check for valid text [May be implemented differently]
+                        if (Clipboard.ContainsText() && Clipboard.GetText().Length > 0)
                         {
-                            // Check text length
-                            if (Clipboard.GetText().Length > 0)
-                            {
-                                // Add to list
-                                this.fifoListBox.Items.Add(Clipboard.GetText());
+                            // Add to list
+                            this.fifoListBox.Items.Add(Clipboard.GetText());
 
-                                // Rise count
-                                this.copyCount++;
+                            // Rise count
+                            this.copyCount++;
 
-                                // Update status
-                                this.countToolStripStatusLabel.Text = this.copyCount.ToString();
-                            }
+                            // Update status
+                            this.countToolStripStatusLabel.Text = this.copyCount.ToString();
                         }
-                        catch
-                        {
-                            // Let it fall through
-                        }
+                    }
+                    catch
+                    {
+                        // TODO Let it fall through [Can be logged]
                     }
 
                     // Halt flow
@@ -147,9 +144,6 @@ namespace ClipboardFIFO
                     // Check for list items
                     if (this.fifoListBox.Items.Count > 0)
                     {
-                        // Unregister hotkey
-                        UnregisterHotKey(this.Handle, 1);
-
                         // Remove cipboard listener
                         RemoveClipboardFormatListener(this.Handle);
 
@@ -164,9 +158,6 @@ namespace ClipboardFIFO
 
                         // Add clipboard listener
                         AddClipboardFormatListener(this.Handle);
-
-                        // Register hotkey again
-                        RegisterHotKey(this.Handle, 1, MODCONTROL, (int)Keys.V);
                     }
 
                     // Halt flow
@@ -433,7 +424,50 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnAboutToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Set license text
+            var licenseText = $"CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication{Environment.NewLine}" +
+                $"https://creativecommons.org/publicdomain/zero/1.0/legalcode{Environment.NewLine}{Environment.NewLine}" +
+                $"Libraries and icons have separate licenses.{Environment.NewLine}{Environment.NewLine}" +
+                $"Arrows icon by Leovinus - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/vectors/arrows-next-direction-green-559297/{Environment.NewLine}{Environment.NewLine}" +
+                $"Minimize icon by Gregor Cresnar from www.flaticon.com{Environment.NewLine}" +
+                $"https://www.flaticon.com/authors/gregor-cresnar{Environment.NewLine}{Environment.NewLine}" +
+                $"Patreon icon used according to published brand guidelines{Environment.NewLine}" +
+                $"https://www.patreon.com/brand{Environment.NewLine}{Environment.NewLine}" +
+                $"GitHub mark icon used according to published logos and usage guidelines{Environment.NewLine}" +
+                $"https://github.com/logos{Environment.NewLine}{Environment.NewLine}" +
+                $"DonationCoder icon used with permission{Environment.NewLine}" +
+                $"https://www.donationcoder.com/forum/index.php?topic=48718{Environment.NewLine}{Environment.NewLine}" +
+                $"PublicDomain icon is based on the following source images:{Environment.NewLine}{Environment.NewLine}" +
+                $"Bitcoin by GDJ - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/vectors/bitcoin-digital-currency-4130319/{Environment.NewLine}{Environment.NewLine}" +
+                $"Letter P by ArtsyBee - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/illustrations/p-glamour-gold-lights-2790632/{Environment.NewLine}{Environment.NewLine}" +
+                $"Letter D by ArtsyBee - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/illustrations/d-glamour-gold-lights-2790573/";
+
+            // Set title
+            string programTitle = typeof(MainForm).GetTypeInfo().Assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
+
+            // Set version for generating semantic version 
+            Version version = typeof(MainForm).GetTypeInfo().Assembly.GetName().Version;
+
+            // Set about form
+            var aboutForm = new AboutForm(
+                $"About {programTitle}",
+                $"{programTitle} v{version.Major}.{version.Minor}.{version.Build}",
+                $"Made for: dwilbank{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #173, Week #25 @ June 2020",
+                licenseText,
+                this.Icon.ToBitmap());
+
+            // Set about form icon
+            aboutForm.Icon = this.associatedIcon;
+
+            // Match topmost
+            aboutForm.TopMost = this.TopMost;
+
+            // Show about form
+            aboutForm.ShowDialog();
         }
 
         /// <summary>

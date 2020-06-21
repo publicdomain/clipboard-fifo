@@ -84,7 +84,7 @@ namespace ClipboardFIFO
         	// exitToolStripMenuItem
         	// 
         	this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-        	this.exitToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+        	this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
         	this.exitToolStripMenuItem.Text = "E&xit";
         	this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnExitToolStripMenuItemClick);
         	// 
@@ -243,14 +243,15 @@ namespace ClipboardFIFO
         	this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
         	this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
         	this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-        	this.newToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+        	this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+        	this.newToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
         	this.newToolStripMenuItem.Text = "&New";
         	this.newToolStripMenuItem.Click += new System.EventHandler(this.OnNewToolStripMenuItemClick);
         	// 
         	// toolStripSeparator4
         	// 
         	this.toolStripSeparator4.Name = "toolStripSeparator4";
-        	this.toolStripSeparator4.Size = new System.Drawing.Size(95, 6);
+        	this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
         	// 
         	// optionsToolStripMenuItem
         	// 
