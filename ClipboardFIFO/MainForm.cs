@@ -115,14 +115,26 @@ namespace ClipboardFIFO
                     // Check for copied text
                     if (Clipboard.ContainsText())
                     {
-                        // Add to list
-                        this.fifoListBox.Items.Add(Clipboard.GetText());
+                        // TODO Supress exception [Can be improved]
+                        try
+                        {
+                            // Check text length
+                            if (Clipboard.GetText().Length > 0)
+                            {
+                                // Add to list
+                                this.fifoListBox.Items.Add(Clipboard.GetText());
 
-                        // Rise count
-                        this.copyCount++;
+                                // Rise count
+                                this.copyCount++;
 
-                        // Update status
-                        this.countToolStripStatusLabel.Text = this.copyCount.ToString();
+                                // Update status
+                                this.countToolStripStatusLabel.Text = this.copyCount.ToString();
+                            }
+                        }
+                        catch
+                        {
+                            // Let it fall through
+                        }
                     }
 
                     // Halt flow
