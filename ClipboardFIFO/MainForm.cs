@@ -8,6 +8,7 @@ namespace ClipboardFIFO
     // Directives
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.IO;
     using System.Reflection;
@@ -393,13 +394,14 @@ namespace ClipboardFIFO
         }
 
         /// <summary>
-        /// Handles the daily releases public domain dailycom tool strip menu item click.
+        /// Handles the daily releases at PublicDomainDaily.com tool strip menu item click event.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         private void OnDailyReleasesPublicDomainDailycomToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Open current website
+            Process.Start("https://publicdomaindaily.com");
         }
 
         /// <summary>
