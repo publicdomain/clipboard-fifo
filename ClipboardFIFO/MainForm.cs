@@ -405,17 +405,18 @@ namespace ClipboardFIFO
         }
 
         /// <summary>
-        /// Handles the original thread donation codercom tool strip menu item click.
+        /// Handles the original thread DonationCoder.com tool strip menu item click event.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         private void OnOriginalThreadDonationCodercomToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Open original thread @ DonationCoder
+            Process.Start("https://www.donationcoder.com/forum/index.php?topic=50014.0");
         }
 
         /// <summary>
-        /// Handles the source code githubcom tool strip menu item click.
+        /// Handles the source code GitHub.com tool strip menu item click.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
