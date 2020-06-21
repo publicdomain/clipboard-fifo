@@ -344,7 +344,14 @@ namespace ClipboardFIFO
         /// <param name="e">Event arguments.</param>
         private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Reset count
+            this.copyCount = 0;
+
+            // Update status 
+            this.countToolStripStatusLabel.Text = this.copyCount.ToString();
+
+            // Clear list
+            this.fifoListBox.Items.Clear();
         }
 
         /// <summary>
