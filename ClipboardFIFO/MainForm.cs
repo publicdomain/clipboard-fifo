@@ -53,12 +53,25 @@ namespace ClipboardFIFO
         private SettingsData settingsData = new SettingsData();
 
         /// <summary>
+        /// The current process identifier.
+        /// </summary>
+        private int currentProcessId;
+
+        /// <summary>
+        /// The clipboard owner process identifier.
+        /// </summary>
+        private uint clipboardOwnerProcessId;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:ClipboardFIFO.MainForm"/> class.
         /// </summary>
         public MainForm()
         {
             // The InitializeComponent() call is required for Windows Forms designer support.
             this.InitializeComponent();
+
+            // Set current process id
+            this.currentProcessId = Process.GetCurrentProcess().Id;
 
             /* Set icons */
 
@@ -117,17 +130,27 @@ namespace ClipboardFIFO
                     // TODO Supress exception [Can be improved]
                     try
                     {
-                        // TODO Check for valid text [May be implemented differently]
-                        if (Clipboard.ContainsText() && Clipboard.GetText().Length > 0)
+                        // Check for text
+                        if (Clipboard.ContainsText())
                         {
-                            // Add to list
-                            this.fifoListBox.Items.Add(Clipboard.GetText());
+                            // Set clipboard text
+                            var clipboardText = Clipboard.GetText();
 
-                            // Rise count
-                            this.copyCount++;
+                            // Set clipboard owner process id
+                            GetWindowThreadProcessId(GetClipboardOwner(), out this.clipboardOwnerProcessId);
 
-                            // Update status
-                            this.countToolStripStatusLabel.Text = this.copyCount.ToString();
+                            // Check for length and prevent self-adding
+                            if (clipboardText.Length > 0 && this.clipboardOwnerProcessId != this.currentProcessId)
+                            {
+                                // Add to list
+                                this.fifoListBox.Items.Add(Clipboard.GetText());
+
+                                // Rise count
+                                this.copyCount++;
+
+                                // Update status
+                                this.countToolStripStatusLabel.Text = this.copyCount.ToString();
+                            }
                         }
                     }
                     catch
@@ -141,23 +164,40 @@ namespace ClipboardFIFO
                 // CTRL+V && (int)m.WParam == 1 --not compared since it's only one ID
                 case WMHOTKEY:
 
-                    // Check for list items
-                    if (this.fifoListBox.Items.Count > 0)
+                    /* TODO This block was modified by report [May need revision] */
+
+                    // TODO Supress exception [Can be improved]
+                    try
                     {
-                        // Remove cipboard listener
-                        RemoveClipboardFormatListener(this.Handle);
+                        // Check for list items
+                        if (this.fifoListBox.Items.Count > 0)
+                        {
+                            // Prevent list box drawing
+                            this.fifoListBox.BeginUpdate();
 
-                        // Set clipboard to next item in FIFO order
-                        Clipboard.SetText(this.fifoListBox.Items[0].ToString());
+                            // TODO Separated to variable to prevent the null parameter report via check [Can be handled differently]
+                            string textToCopy = this.fifoListBox.Items[0].ToString();
 
-                        // Send ^V
-                        SendKeys.SendWait("^v");
+                            // Check there's something to work with
+                            if (textToCopy.Length > 0)
+                            {
+                                // Set clipboard to next item in FIFO order
+                                Clipboard.SetText(textToCopy);
 
-                        // Remove last item
-                        this.fifoListBox.Items.RemoveAt(0);
+                                // Remove last item
+                                this.fifoListBox.Items.RemoveAt(0);
 
-                        // Add clipboard listener
-                        AddClipboardFormatListener(this.Handle);
+                                // Send ^V
+                                SendKeys.SendWait("^v");
+                            }
+
+                            // Resume list box drawing
+                            this.fifoListBox.EndUpdate();
+                        }
+                    }
+                    catch
+                    {
+                        // TODO Let it fall through [Can be logged]
                     }
 
                     // Halt flow
@@ -173,6 +213,8 @@ namespace ClipboardFIFO
                     break;
             }
         }
+
+
 
         /// <summary>
         /// Adds the clipboard format listener.
@@ -211,6 +253,22 @@ namespace ClipboardFIFO
         /// <param name="id">The identifier.</param>
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr handle, int id);
+
+        /// <summary>
+        /// Gets the clipboard owner.
+        /// </summary>
+        /// <returns>The clipboard owner.</returns>
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetClipboardOwner();
+
+        /// <summary>
+        /// Gets the window thread process identifier.
+        /// </summary>
+        /// <returns>The window thread process identifier.</returns>
+        /// <param name="hWnd">H window.</param>
+        /// <param name="lpdwProcessId">Lpdw process identifier.</param>
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         /// <summary>
         /// Handles the pause resume button click.
@@ -456,7 +514,7 @@ namespace ClipboardFIFO
             var aboutForm = new AboutForm(
                 $"About {programTitle}",
                 $"{programTitle} v{version.Major}.{version.Minor}.{version.Build}",
-                $"Made for: dwilbank{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #173, Week #25 @ June 2020",
+                $"Made for: dwilbank{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #175, Week #26 @ June 2020",
                 licenseText,
                 this.Icon.ToBitmap());
 

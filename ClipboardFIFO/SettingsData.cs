@@ -15,7 +15,7 @@ namespace PublicDomain
     public class SettingsData
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:ClipboardFIFO.SettingsData"/> class.
+        /// Initializes a new instance of the <see cref="T:PublicDomain.SettingsData"/> class.
         /// </summary>
         public SettingsData()
         {
